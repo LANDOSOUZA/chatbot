@@ -1,0 +1,88 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": [
+        "# ===================================================\n",
+        "# AULA 05 — Exercício 1 — 01_setup_groq_gradio.ipynb\n",
+        "# ==================================================="
+      ],
+      "metadata": {
+        "id": "SXujv-I-Em8w"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "E3VJ4B3ipDup"
+      },
+      "outputs": [],
+      "source": [
+        "!pip install groq gradio"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from google.colab import userdata\n",
+        "\n",
+        "# Recupera a chave da API do Groq salva nos Secrets do Colab\n",
+        "GROQ_API_KEY = userdata.get(\"appLando\")\n",
+        "\n",
+        "# Verificação básica\n",
+        "if GROQ_API_KEY:\n",
+        "    print(\"✅ API Key do Groq carregada com sucesso\")\n",
+        "else:\n",
+        "    print(\"❌ API Key do Groq NÃO encontrada\")"
+      ],
+      "metadata": {
+        "id": "kYT0-9_GOzBd"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from groq import Groq\n",
+        "\n",
+        "# Cria o cliente Groq\n",
+        "client = Groq(api_key=GROQ_API_KEY)\n",
+        "\n",
+        "# Teste simples de completions\n",
+        "response = client.chat.completions.create(\n",
+        "    model=\"llama-3.1-8b-instant\",\n",
+        "    messages=[\n",
+        "        {\"role\": \"system\", \"content\": \"Você é um assistente de testes.\"},\n",
+        "        {\"role\": \"user\", \"content\": \"Diga apenas: conexão com Groq funcionando.\"}\n",
+        "    ],\n",
+        "    temperature=0\n",
+        ")\n",
+        "\n",
+        "print(response.choices[0].message.content)"
+      ],
+      "metadata": {
+        "id": "FDDKCQTKiotj"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
